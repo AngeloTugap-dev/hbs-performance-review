@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOT Business Solutions Inc. - 5th Month Performance Evaluation</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Font Montserrat & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hbs: {
+                            gold: '#F1B811',      // Signature HBS Yellow/Gold bulb accent
+                            goldhover: '#D9A30A',
+                            dark: '#0D1117',      // Deep Corporate Navy/Black
+                            slate: '#161B22',     // Dark Card Accent
+                            accent: '#F25C05',    // Secondary Accent Orange
+                            card: '#FFFFFF',
+                            text: '#1E293B'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Montserrat', 'sans-serif'],
+                        body: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, .brand-font { font-family: 'Montserrat', sans-serif; }
+        .gradient-hbs-header {
+            background: linear-gradient(135deg, #0D1117 0%, #161B22 100%);
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="h-full flex flex-col text-slate-800 antialiased selection:bg-hbs-gold selection:text-hbs-dark bg-slate-100">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-hbs-dark text-white border-b border-slate-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo & Title -->
+                <div class="flex items-center space-x-4">
+                    <div class="h-12 flex items-center justify-center p-1 bg-hbs-slate/60 rounded-xl border border-slate-700/50">
+                        <img src="company-logo.png" alt="HOT Business Solutions Inc." class="h-9 w-auto object-contain">
+                    </div>
+                    <div class="border-l border-slate-700 pl-4 hidden sm:block">
+                        <h1 class="text-base font-bold tracking-tight text-white leading-tight">HOT Business Solutions Inc.</h1>
+                        <p class="text-xs text-hbs-gold font-medium">ElevateHR Performance Appraisal Management System</p>
+                    </div>
+                </div>
+
+                <!-- Role Switcher Control -->
+                <div class="flex items-center space-x-2 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
+                    <span class="text-[11px] text-slate-400 font-semibold px-2 hidden md:flex items-center gap-1 uppercase tracking-wider">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-hbs-gold"></i> Active Role:
+                    </span>
+                    <button onclick="switchRole('employee')" id="role-btn-employee" 
+                        class="role-btn px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 bg-hbs-gold text-hbs-dark shadow-md">
+                        <i data-lucide="user" class="w-3.5 h-3.5"></i> Employee
+                    </button>
+                    <button onclick="switchRole('manager')" id="role-btn-manager" 
+                        class="role-btn px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i data-lucide="user-cog" class="w-3.5 h-3.5"></i> Manager
+                    </button>
+                    <button onclick="switchRole('hr')" id="role-btn-hr" 
+                        class="role-btn px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> HR Governance
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- Role Banner Notification -->
+        <div id="role-banner" class="bg-amber-500/10 border border-hbs-gold/40 rounded-2xl p-4 flex items-start justify-between shadow-sm">
+            <div class="flex items-start space-x-3">
+                <div class="p-2 bg-hbs-gold/20 rounded-xl text-hbs-gold mt-0.5" id="role-icon-box">
+                    <i data-lucide="info" class="w-5 h-5 text-hbs-dark"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-slate-900" id="role-banner-title">Employee Self-Evaluation Portal</h3>
+                    <p class="text-xs text-slate-600 mt-0.5" id="role-banner-desc">
+                        Provide self-ratings and accomplishment remarks across all 9 performance criteria. Manager evaluation ratings remain confidential during Stage 1.
+                    </p>
+                </div>
+            </div>
+            <button onclick="openMagicLinkModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 text-xs font-bold rounded-xl shadow-sm transition">
+                <i data-lucide="mail" class="w-3.5 h-3.5 text-hbs-gold"></i> Workflow Simulator
+            </button>
+        </div>
+
+        <!-- Employee Metadata Card -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="gradient-hbs-header p-6 text-white flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-3 py-0.5 bg-hbs-gold text-hbs-dark text-[11px] font-extrabold uppercase rounded-full tracking-wider">
+                            5th Month Review
+                        </span>
+                        <span class="px-3 py-0.5 bg-slate-800 text-slate-300 text-[11px] font-semibold rounded-full border border-slate-700">
+                            HBS BPO Operations
+                        </span>
+                    </div>
+                    <h2 class="text-2xl font-black tracking-tight text-white">Angelo Tugap</h2>
+                    <p class="text-xs text-slate-400 mt-1">HOT Business Solutions Inc. &bull; Employee ID: <span class="text-hbs-gold font-mono font-bold">#HBS-88492</span></p>
+                </div>
+
+                <!-- Evaluator Info Pill -->
+                <div class="flex items-center gap-4 bg-slate-900/80 backdrop-blur border border-slate-800 p-3.5 rounded-xl">
+                    <div class="text-right">
+                        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Date Hired</div>
+                        <div class="text-xs font-bold text-slate-200">May 15, 2026</div>
+                    </div>
+                    <div class="h-8 w-px bg-slate-800"></div>
+                    <div class="text-right">
+                        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Assigned Evaluator</div>
+                        <div class="text-xs font-bold text-slate-200">Sarah Jenkins (Operations Manager)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Summary Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-slate-50 border-t border-slate-200 text-xs">
+                <div>
+                    <span class="text-slate-400 block font-medium">Business Unit:</span>
+                    <span class="font-bold text-slate-800">HBS - Claims Processing Desk</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block font-medium">Position Title:</span>
+                    <span class="font-bold text-slate-800">Senior Process Associate</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block font-medium">Evaluation Period:</span>
+                    <span class="font-bold text-slate-800">October 20, 2026</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block font-medium">Current Review Stage:</span>
+                    <span class="inline-flex items-center gap-1 font-bold text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300 text-[11px]" id="status-badge">
+                        <i data-lucide="clock" class="w-3 h-3"></i> Stage 1: Pending Self-Eval
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weighted Performance Live Dashboard -->
+        <div id="score-summary-card" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="calculator" class="w-5 h-5 text-hbs-gold"></i>
+                    <h3 class="font-bold text-slate-900 text-base">HBS Weighted Performance Dashboard</h3>
+                </div>
+                <span class="text-xs text-slate-500 font-medium" id="score-visibility-notice">Visible to: Active User</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Self Rating Card -->
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 relative overflow-hidden">
+                    <div class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider mb-1">Employee Self-Rating</div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-black text-slate-900" id="employee-final-score">3.85</span>
+                        <span class="text-xs text-slate-500 font-bold">/ 5.00</span>
+                    </div>
+                    <div class="mt-3">
+                        <span id="employee-band-badge" class="inline-block px-3 py-1 text-xs font-bold rounded-lg bg-slate-200 text-slate-800">
+                            Average
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-2">Weighted sum of 9 evaluation criteria</p>
+                </div>
+
+                <!-- Manager Rating Card -->
+                <div id="manager-score-box" class="bg-slate-50 rounded-2xl p-5 border border-slate-200 relative overflow-hidden transition-all">
+                    <div class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider mb-1">Manager Official Rating</div>
+                    <div id="manager-score-value-container" class="flex items-baseline gap-2">
+                        <span class="text-4xl font-black text-hbs-dark" id="manager-final-score">4.15</span>
+                        <span class="text-xs text-slate-500 font-bold">/ 5.00</span>
+                    </div>
+                    <div id="manager-band-container" class="mt-3">
+                        <span id="manager-band-badge" class="inline-block px-3 py-1 text-xs font-bold rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-300">
+                            Above Average
+                        </span>
+                    </div>
+                    <!-- Restricted Mask Overlay for Employee -->
+                    <div id="manager-score-blur" class="hidden absolute inset-0 bg-slate-100/95 backdrop-blur-md flex flex-col items-center justify-center p-4 text-center">
+                        <i data-lucide="lock" class="w-6 h-6 text-slate-400 mb-1"></i>
+                        <span class="text-xs font-extrabold text-slate-700">Confidential Manager Rating</span>
+                        <span class="text-[10px] text-slate-500 mt-0.5">Manager evaluation is unlocked during Stage 2 review.</span>
+                    </div>
+                </div>
+
+                <!-- Rating Legend Card -->
+                <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-xs space-y-2">
+                    <div class="font-bold text-slate-800 border-b border-slate-200 pb-2 flex items-center justify-between">
+                        <span>HBS BPO Appraisal Scale</span>
+                        <i data-lucide="help-circle" class="w-3.5 h-3.5 text-slate-400"></i>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-600 font-medium">4.60 – 5.00</span>
+                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-extrabold rounded">Excellent</span>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-600 font-medium">3.90 – 4.59</span>
+                        <span class="px-2 py-0.5 bg-amber-100 text-amber-900 font-extrabold rounded border border-amber-300">Above Average</span>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-600 font-medium">3.00 – 3.89</span>
+                        <span class="px-2 py-0.5 bg-slate-200 text-slate-800 font-extrabold rounded">Average</span>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-600 font-medium">2.00 – 2.99</span>
+                        <span class="px-2 py-0.5 bg-orange-100 text-orange-800 font-extrabold rounded">Below Average</span>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-600 font-medium">1.00 – 1.99</span>
+                        <span class="px-2 py-0.5 bg-rose-100 text-rose-800 font-extrabold rounded">Poor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evaluation Table -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">Performance Evaluation Criteria</h3>
+                    <p class="text-xs text-slate-500">Rate performance on a scale from 1 (Poor) to 5 (Excellent).</p>
+                </div>
+                <div class="flex items-center gap-3 text-xs font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-600"><span class="w-3 h-3 rounded-full bg-hbs-gold"></span> Employee Rating</span>
+                    <span class="flex items-center gap-1.5 text-slate-600"><span class="w-3 h-3 rounded-full bg-slate-800"></span> Manager Rating</span>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 font-extrabold uppercase tracking-wider text-[11px]">
+                            <th class="py-3.5 px-4 w-1/4">Evaluation Category</th>
+                            <th class="py-3.5 px-2 w-16 text-center">Weight</th>
+                            <th class="py-3.5 px-3 w-36">Self-Score (1-5)</th>
+                            <th class="py-3.5 px-3 w-36 manager-col">Manager Rating</th>
+                            <th class="py-3.5 px-4">Employee Remarks</th>
+                            <th class="py-3.5 px-4 manager-col">Manager Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="evaluation-table-body" class="divide-y divide-slate-200">
+                        <!-- Populated dynamic rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Manager Assessment & HR Recommendation Section -->
+        <div id="manager-section" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+            <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-5 h-5 text-hbs-gold"></i>
+                    <h3 class="font-bold text-slate-900 text-base">Manager Assessment & Action Plan</h3>
+                </div>
+                <span class="text-xs bg-slate-100 text-slate-800 px-3 py-1 rounded-full font-bold border border-slate-300">
+                    HBS Management Module
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Strengths -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Key Strengths & Accomplishments</label>
+                    <textarea id="mgr-strengths" rows="3" class="w-full p-3 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-hbs-gold outline-none transition" placeholder="Highlight primary contributions, SLA adherence, or key BPO metrics exceeded..."></textarea>
+                </div>
+
+                <!-- Areas for Improvement -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Areas for Growth & Improvement</label>
+                    <textarea id="mgr-improvements" rows="3" class="w-full p-3 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-hbs-gold outline-none transition" placeholder="Identify operational areas needing development or soft skills guidance..."></textarea>
+                </div>
+
+                <!-- Recommended Training -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-1">Recommended Upskilling / Training Modules</label>
+                    <textarea id="mgr-training" rows="3" class="w-full p-3 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-hbs-gold outline-none transition" placeholder="List technical training, compliance, or quality assurance programs..."></textarea>
+                </div>
+
+                <!-- HR Recommendation Decision -->
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-900 mb-1.5">
+                            <i data-lucide="award" class="w-4 h-4 text-hbs-gold inline mr-1"></i> Manager / HR Final Recommendation
+                        </label>
+                        <p class="text-[11px] text-slate-500 mb-3">Employment status continuation decision following 5th month appraisal.</p>
+                        <select id="hr-recommendation" class="w-full p-2.5 text-xs font-bold rounded-xl border border-slate-300 focus:ring-2 focus:ring-hbs-gold bg-white shadow-sm">
+                            <option value="Regularization">Confirm Regularization (Passed Evaluation)</option>
+                            <option value="Salary Increase">Confirm Regularization with Merit Increase</option>
+                            <option value="Promotion">Recommend for Promotion / Leadership Training</option>
+                            <option value="Transfer">Transfer to another Business Unit / Account</option>
+                            <option value="Termination">End Contract / Non-Regularization</option>
+                        </select>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+                        <span>Requires HR Approval Sign-Off</span>
+                        <span class="font-bold text-emerald-700" id="rec-status">Status: Draft</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Control Bar -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <button onclick="saveDraft()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition flex items-center gap-1.5 border border-slate-300">
+                    <i data-lucide="save" class="w-4 h-4"></i> Save Draft Progress
+                </button>
+                <button onclick="resetData()" class="px-3 py-2 text-rose-600 hover:bg-rose-50 text-xs font-bold rounded-xl transition">
+                    Reset Form
+                </button>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="hr-export-btn" onclick="exportSummary()" class="px-4 py-2.5 bg-hbs-dark hover:bg-slate-900 text-white text-xs font-bold rounded-xl shadow transition flex items-center gap-1.5">
+                    <i data-lucide="download" class="w-4 h-4 text-hbs-gold"></i> Export Audit PDF
+                </button>
+                <button onclick="submitEvaluation()" class="px-6 py-2.5 bg-hbs-gold hover:bg-hbs-goldhover text-hbs-dark text-xs font-extrabold rounded-xl shadow-md transition flex items-center gap-1.5">
+                    <i data-lucide="send" class="w-4 h-4"></i> Submit Official Review
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Workflow Simulator Modal -->
+    <div id="magic-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 relative">
+            <button onclick="closeMagicLinkModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="flex items-center gap-3 mb-4">
+                <div class="p-2 bg-hbs-gold/20 text-hbs-dark rounded-xl">
+                    <i data-lucide="mail-check" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">HBS Email Workflow Simulator</h3>
+                    <p class="text-xs text-slate-500">Simulate entering the evaluation via automated email links</p>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <!-- Employee Magic Link -->
+                <div class="p-3 border border-slate-200 rounded-xl hover:border-hbs-gold transition bg-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs font-bold text-slate-800">Angelo Tugap (Employee)</div>
+                            <div class="text-[11px] text-slate-400">angelo.tugap@hotbusinesssolutions.ph</div>
+                        </div>
+                        <button onclick="simulateLinkAccess('employee')" class="px-3 py-1 bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100 text-xs font-bold rounded-lg transition flex items-center gap-1">
+                            Simulate <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Manager Magic Link -->
+                <div class="p-3 border border-slate-200 rounded-xl hover:border-hbs-gold transition bg-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs font-bold text-slate-800">Sarah Jenkins (Manager)</div>
+                            <div class="text-[11px] text-slate-400">sarah.jenkins@hotbusinesssolutions.ph</div>
+                        </div>
+                        <button onclick="simulateLinkAccess('manager')" class="px-3 py-1 bg-slate-100 text-slate-800 hover:bg-slate-200 text-xs font-bold rounded-lg transition flex items-center gap-1">
+                            Simulate <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- HR Magic Link -->
+                <div class="p-3 border border-slate-200 rounded-xl hover:border-hbs-gold transition bg-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs font-bold text-slate-800">HR Admin Portal</div>
+                            <div class="text-[11px] text-slate-400">hr@hotbusinesssolutions.ph</div>
+                        </div>
+                        <button onclick="simulateLinkAccess('hr')" class="px-3 py-1 bg-slate-900 text-hbs-gold hover:bg-slate-800 text-xs font-bold rounded-lg transition flex items-center gap-1">
+                            Simulate <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 pt-3 border-t border-slate-100 text-right">
+                <button onclick="closeMagicLinkModal()" class="px-4 py-2 bg-slate-200 text-slate-700 text-xs font-bold rounded-lg">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script Engine -->
+    <script>
+        const evaluationCriteria = [
+            // Effectiveness (30%)
+            { id: "job_knowledge", category: "Effectiveness / Work Input (30%)", title: "Job Knowledge", desc: "Understanding of BPO SOPs, systems, account workflows, and standard procedures.", weight: 0.15 },
+            { id: "quality_work", category: "Effectiveness / Work Input (30%)", title: "Quality of Work", desc: "Accuracy, thoroughness, neatness, and QA audit adherence.", weight: 0.15 },
+            
+            // Efficiency (30%)
+            { id: "quantity_work", category: "Efficiency / Work Output (30%)", title: "Quantity of Work", desc: "Volume of throughput, AHT compliance, and productivity targets.", weight: 0.15 },
+            { id: "reliability", category: "Efficiency / Work Output (30%)", title: "Reliability & Dependability", desc: "Dependability SOP compliance and meeting project deadlines.", weight: 0.15 },
+            
+            // Work Attitude (25%)
+            { id: "accountability", category: "Work Attitude (25%)", title: "Accountability", desc: "Ownership of work outcomes, accepting feedback, and taking pride in results.", weight: 0.10 },
+            { id: "ability_learn", category: "Work Attitude (25%)", title: "Ability to Learn", desc: "Speed of acquiring new technical skills and adapting to client updates.", weight: 0.10 },
+            { id: "initiative", category: "Work Attitude (25%)", title: "Initiative", desc: "Proactiveness, problem-solving, and building process automations.", weight: 0.05 },
+            
+            // Human Relations (15%)
+            { id: "cooperation", category: "Human Relations (15%)", title: "Cooperation & Compliance", desc: "Teamwork, cross-department collaboration, and floor policy compliance.", weight: 0.05 },
+            { id: "attendance", category: "Human Relations (15%)", title: "Attendance & Punctuality", desc: "Shift schedule adherence, low absenteeism, and minimal tardiness.", weight: 0.10 }
+        ];
+
+        let appData = {
+            currentRole: "employee",
+            employeeScores: { job_knowledge: 4, quality_work: 4, quantity_work: 3, reliability: 4, accountability: 4, ability_learn: 4, initiative: 3, cooperation: 4, attendance: 4 },
+            employeeRemarks: {
+                job_knowledge: "Mastered all primary claims tools and ticketing queues.",
+                quality_work: "Maintained 98% QA audit accuracy across last quarter.",
+                quantity_work: "Met daily output quota consistently.",
+                reliability: "Zero missed SLA deliverables.",
+                accountability: "Took full ownership of escalated account issues.",
+                ability_learn: "Quickly learned updated client portal workflows.",
+                initiative: "Assisted team lead in drafting process documentation.",
+                cooperation: "Collaborated effectively with cross-functional desks.",
+                attendance: "100% attendance adherence record."
+            },
+            managerScores: { job_knowledge: 4, quality_work: 4, quantity_work: 4, reliability: 4, accountability: 5, ability_learn: 4, initiative: 4, cooperation: 4, attendance: 4 },
+            managerRemarks: {
+                job_knowledge: "Strong domain expertise in claims management.",
+                quality_work: "High quality output with minimal supervision.",
+                quantity_work: "Hits production throughput targets reliably.",
+                reliability: "Very dependable during peak volume shifts.",
+                accountability: "Exemplary ownership of operational tasks.",
+                ability_learn: "Fast learner on account briefs.",
+                initiative: "Proactively helps peers resolve edge cases.",
+                cooperation: "Great team player, strict policy compliance.",
+                attendance: "Punctual schedule record."
+            },
+            managerFeedback: {
+                strengths: "Exceptional accountability and domain technical knowledge. Very consistent quality assurance results.",
+                improvements: "Can further refine handling speed during peak volume surges.",
+                training: "Advanced Escalation Handling & Leadership Skills Training.",
+                recommendation: "Regularization"
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
+            renderTable();
+            recalculateScores();
+            switchRole('employee');
+            lucide.createIcons();
+        });
+
+        function saveDraft() {
+            localStorage.setItem('hbs_perf_review_data', JSON.stringify(appData));
+            showToast("Progress draft saved locally!");
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem('hbs_perf_review_data');
+            if (saved) {
+                try { appData = JSON.parse(saved); } catch(e){}
+            }
+        }
+
+        function resetData() {
+            if (confirm("Reset all evaluation inputs to default?")) {
+                localStorage.removeItem('hbs_perf_review_data');
+                location.reload();
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('evaluation-table-body');
+            tbody.innerHTML = '';
+            let currentCat = '';
+
+            evaluationCriteria.forEach((item) => {
+                if (item.category !== currentCat) {
+                    currentCat = item.category;
+                    const catRow = document.createElement('tr');
+                    catRow.className = 'bg-slate-100 font-bold text-slate-800 text-xs';
+                    catRow.innerHTML = `<td colspan="6" class="py-2.5 px-4 border-y border-slate-200"><i data-lucide="folder" class="w-3.5 h-3.5 inline mr-1 text-hbs-gold"></i> ${currentCat}</td>`;
+                    tbody.appendChild(catRow);
+                }
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                
+                const empScore = appData.employeeScores[item.id] || 3;
+                const mgrScore = appData.managerScores[item.id] || 3;
+                const empRemark = appData.employeeRemarks[item.id] || '';
+                const mgrRemark = appData.managerRemarks[item.id] || '';
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4">
+                        <div class="font-bold text-slate-900">${item.title}</div>
+                        <div class="text-[11px] text-slate-500 leading-tight mt-0.5">${item.desc}</div>
+                    </td>
+                    <td class="py-3 px-2 text-center font-bold text-slate-700">${(item.weight * 100).toFixed(0)}%</td>
+                    <td class="py-3 px-3">
+                        <select onchange="updateScore('employee', '${item.id}', this.value)" 
+                            class="emp-input w-full p-1.5 border border-slate-300 rounded-lg bg-white text-xs font-bold focus:ring-2 focus:ring-hbs-gold">
+                            ${[1,2,3,4,5].map(v => `<option value="${v}" ${empScore == v ? 'selected' : ''}>${v} - ${getRatingLabel(v)}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td class="py-3 px-3 manager-col">
+                        <select onchange="updateScore('manager', '${item.id}', this.value)" 
+                            class="mgr-input w-full p-1.5 border border-slate-300 rounded-lg bg-white text-xs font-bold focus:ring-2 focus:ring-slate-800">
+                            ${[1,2,3,4,5].map(v => `<option value="${v}" ${mgrScore == v ? 'selected' : ''}>${v} - ${getRatingLabel(v)}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td class="py-3 px-4">
+                        <input type="text" value="${empRemark}" onchange="updateRemark('employee', '${item.id}', this.value)" placeholder="Self remarks..." class="emp-input w-full p-1.5 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-hbs-gold outline-none">
+                    </td>
+                    <td class="py-3 px-4 manager-col">
+                        <input type="text" value="${mgrRemark}" onchange="updateRemark('manager', '${item.id}', this.value)" placeholder="Manager remarks..." class="mgr-input w-full p-1.5 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-slate-800 outline-none">
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('mgr-strengths').value = appData.managerFeedback.strengths;
+            document.getElementById('mgr-improvements').value = appData.managerFeedback.improvements;
+            document.getElementById('mgr-training').value = appData.managerFeedback.training;
+            document.getElementById('hr-recommendation').value = appData.managerFeedback.recommendation;
+
+            document.getElementById('mgr-strengths').onchange = (e) => appData.managerFeedback.strengths = e.target.value;
+            document.getElementById('mgr-improvements').onchange = (e) => appData.managerFeedback.improvements = e.target.value;
+            document.getElementById('mgr-training').onchange = (e) => appData.managerFeedback.training = e.target.value;
+            document.getElementById('hr-recommendation').onchange = (e) => {
+                appData.managerFeedback.recommendation = e.target.value;
+                document.getElementById('rec-status').innerText = "Status: Selected (" + e.target.value + ")";
+            };
+
+            lucide.createIcons();
+        }
+
+        function getRatingLabel(val) {
+            switch(parseInt(val)) {
+                case 5: return 'Excellent';
+                case 4: return 'Above Avg';
+                case 3: return 'Average';
+                case 2: return 'Below Avg';
+                case 1: return 'Poor';
+                default: return '';
+            }
+        }
+
+        function updateScore(role, key, value) {
+            if (role === 'employee') appData.employeeScores[key] = parseFloat(value);
+            if (role === 'manager') appData.managerScores[key] = parseFloat(value);
+            recalculateScores();
+        }
+
+        function updateRemark(role, key, value) {
+            if (role === 'employee') appData.employeeRemarks[key] = value;
+            if (role === 'manager') appData.managerRemarks[key] = value;
+        }
+
+        function recalculateScores() {
+            let empSum = 0, mgrSum = 0;
+            evaluationCriteria.forEach(item => {
+                empSum += (appData.employeeScores[item.id] || 0) * item.weight;
+                mgrSum += (appData.managerScores[item.id] || 0) * item.weight;
+            });
+
+            const empFinal = empSum.toFixed(2);
+            const mgrFinal = mgrSum.toFixed(2);
+
+            document.getElementById('employee-final-score').innerText = empFinal;
+            document.getElementById('manager-final-score').innerText = mgrFinal;
+
+            updateBandBadge('employee-band-badge', empFinal);
+            updateBandBadge('manager-band-badge', mgrFinal);
+        }
+
+        function updateBandBadge(elementId, score) {
+            const badge = document.getElementById(elementId);
+            const val = parseFloat(score);
+            let label = "Average", className = "bg-slate-200 text-slate-800";
+
+            if (val >= 4.60) { label = "Excellent"; className = "bg-emerald-100 text-emerald-800 border border-emerald-300"; }
+            else if (val >= 3.90) { label = "Above Average"; className = "bg-amber-100 text-amber-900 border border-amber-300"; }
+            else if (val >= 3.00) { label = "Average"; className = "bg-slate-200 text-slate-800 border border-slate-300"; }
+            else if (val >= 2.00) { label = "Below Average"; className = "bg-orange-100 text-orange-800 border border-orange-300"; }
+            else { label = "Poor"; className = "bg-rose-100 text-rose-800 border border-rose-300"; }
+
+            badge.innerText = label;
+            badge.className = `inline-block px-3 py-1 text-xs font-bold rounded-lg ${className}`;
+        }
+
+        function switchRole(role) {
+            appData.currentRole = role;
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.className = 'role-btn px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800';
+            });
+
+            const activeBtn = document.getElementById(`role-btn-${role}`);
+            if (activeBtn) activeBtn.className = 'role-btn px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 bg-hbs-gold text-hbs-dark shadow-md';
+
+            const bannerTitle = document.getElementById('role-banner-title');
+            const bannerDesc = document.getElementById('role-banner-desc');
+            const managerBlur = document.getElementById('manager-score-blur');
+
+            const empInputs = document.querySelectorAll('.emp-input');
+            const mgrInputs = document.querySelectorAll('.mgr-input');
+            const mgrTextareas = document.querySelectorAll('#mgr-strengths, #mgr-improvements, #mgr-training, #hr-recommendation');
+
+            if (role === 'employee') {
+                bannerTitle.innerText = "Employee Self-Assessment View Mode";
+                bannerDesc.innerText = "Fill out ratings and remarks for your 5th-month evaluation. Manager ratings remain confidential during stage 1.";
+                managerBlur.classList.remove('hidden');
+                empInputs.forEach(i => i.disabled = false);
+                mgrInputs.forEach(i => i.disabled = true);
+                mgrTextareas.forEach(i => i.disabled = true);
+            } else if (role === 'manager') {
+                bannerTitle.innerText = "Manager Official Assessment View Mode";
+                bannerDesc.innerText = "Review employee self-scores, assign manager ratings, and document feedback strengths/improvements.";
+                managerBlur.classList.add('hidden');
+                empInputs.forEach(i => i.disabled = true);
+                mgrInputs.forEach(i => i.disabled = false);
+                mgrTextareas.forEach(i => i.disabled = false);
+            } else if (role === 'hr') {
+                bannerTitle.innerText = "HR Governance & Administration View Mode";
+                bannerDesc.innerText = "Full confidential audit access unlocked. Inspect score profiles, verify regularization status, and finalize records.";
+                managerBlur.classList.add('hidden');
+                empInputs.forEach(i => i.disabled = true);
+                mgrInputs.forEach(i => i.disabled = false);
+                mgrTextareas.forEach(i => i.disabled = false);
+            }
+        }
+
+        function openMagicLinkModal() { document.getElementById('magic-modal').classList.remove('hidden'); }
+        function closeMagicLinkModal() { document.getElementById('magic-modal').classList.add('hidden'); }
+
+        function simulateLinkAccess(role) {
+            switchRole(role);
+            closeMagicLinkModal();
+            showToast(`Switched active view role to: ${role.toUpperCase()}`);
+        }
+
+        async function submitEvaluation() {
+            saveDraft();
+            document.getElementById('status-badge').className = "inline-flex items-center gap-1 font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300 text-[11px]";
+            document.getElementById('status-badge').innerHTML = '<i data-lucide="check-circle-2" class="w-3 h-3"></i> Stage Complete & Locked';
+            showToast("Evaluation submitted successfully to SharePoint!");
+            lucide.createIcons();
+        }
+
+        function exportSummary() {
+            window.print();
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 bg-hbs-dark text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-2 border border-slate-700';
+            toast.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4 text-hbs-gold"></i> ${message}`;
+            document.body.appendChild(toast);
+            lucide.createIcons();
+            setTimeout(() => { toast.remove(); }, 3000);
+        }
+    </script>
+</body>
+</html>
